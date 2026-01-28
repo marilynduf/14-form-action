@@ -79,11 +79,6 @@ export function NewOpinion() {
                     ></textarea>
                     <p className="errors">{state.error?.bodyMsg}</p>
                 </div>
-
-                <p className="actions">
-                    <button type="submit">Submit</button>
-                </p>
-
                 <div className="control">
                     <label htmlFor="province">Choose your province</label>
                     <select id="province" name="province">
@@ -93,6 +88,9 @@ export function NewOpinion() {
                     </select>
                     <p className="errors">{state.error?.provinceMsg}</p>
                 </div>
+                <p className="actions">
+                    <button type="submit">Submit</button>
+                </p>
             </form>
         </div>
     );
