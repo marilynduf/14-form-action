@@ -10,6 +10,9 @@ export function NewOpinion() {
         const title = formData.get("title");
         const body = formData.get("body");
         const province = formData.get("province");
+        const colors = formData.getAll("color");
+
+        console.log(colors);
 
         let errorMsg = {};
 
@@ -25,6 +28,9 @@ export function NewOpinion() {
         if (province === "select") {
             errorMsg.provinceMsg = "Choose a Province";
         }
+        if (colors.length === 0) {
+            errorMsg.colorMsg = "Select one or more color";
+        }
 
         if (Object.keys(errorMsg).length > 0) {
             return {
@@ -34,6 +40,7 @@ export function NewOpinion() {
                     title,
                     body,
                     province,
+                    colors,
                 },
             };
         }
@@ -79,6 +86,68 @@ export function NewOpinion() {
                     ></textarea>
                     <p className="errors">{state.error?.bodyMsg}</p>
                 </div>
+
+                {/* COLORS */}
+                <div>
+                    <div className="control">
+                        <label>Choose one or more color</label>
+                        <div
+                            style={{
+                                border: "2px solid red",
+                                backgroundColor: "#ff0000b8",
+                            }}
+                            className="control"
+                        >
+                            <label htmlFor="red">Red</label>
+                            <input
+                                id="red"
+                                name="color"
+                                type="checkbox"
+                                value="red"
+                                defaultChecked={state.enteredValues?.colors.includes(
+                                    "red",
+                                )}
+                            />
+                        </div>
+                        <div
+                            style={{
+                                border: "2px solid blue",
+                                backgroundColor: "#0000ffa6",
+                            }}
+                        >
+                            <label htmlFor="blue">Blue</label>
+                            <input
+                                id="blue"
+                                name="color"
+                                type="checkbox"
+                                value="blue"
+                                defaultChecked={state.enteredValues?.colors.includes(
+                                    "blue",
+                                )}
+                            />
+                        </div>
+                        <div
+                            style={{
+                                border: "2px solid yellow",
+                                backgroundColor: "#ffff00b5",
+                            }}
+                        >
+                            <label htmlFor="yellow">Yellow</label>
+                            <input
+                                id="yellow"
+                                name="color"
+                                type="checkbox"
+                                value="yellow"
+                                defaultChecked={state.enteredValues?.colors.includes(
+                                    "yellow",
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <p className="errors">{state.error?.colorMsg}</p>
+                </div>
+
+                {/* PROVINCE */}
                 <div className="control">
                     <label htmlFor="province">Choose your province</label>
                     <select id="province" name="province">
@@ -88,6 +157,7 @@ export function NewOpinion() {
                     </select>
                     <p className="errors">{state.error?.provinceMsg}</p>
                 </div>
+
                 <p className="actions">
                     <button type="submit">Submit</button>
                 </p>
