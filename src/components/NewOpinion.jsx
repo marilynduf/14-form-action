@@ -6,18 +6,24 @@ const isNotEmpty = function (data) {
 
 export function NewOpinion() {
     const newOpinionAction = function (prevState, formData) {
-        console.log(formData.get("userName"));
         const userName = formData.get("userName");
         const title = formData.get("title");
         const body = formData.get("body");
 
-        let errorMsg = "";
+        let errorMsg = {};
 
-        if (!isNotEmpty(userName) || !isNotEmpty(title) || !isNotEmpty(body)) {
-            errorMsg = "Enter all fields";
-            // console.log(errorMsg);
+        if (!isNotEmpty(userName)) {
+            errorMsg.nameMsg = "Enter user name";
         }
-        if (errorMsg.length > 0) {
+        if (!isNotEmpty(title)) {
+            errorMsg.titleMsg = "Enter a title";
+        }
+
+        if (!isNotEmpty(body)) {
+            errorMsg.bodyMsg = "Enter a message";
+        }
+
+        if (Object.keys(errorMsg).length > 0) {
             return {
                 error: errorMsg,
                 enteredValues: {
@@ -27,7 +33,6 @@ export function NewOpinion() {
                 },
             };
         }
-
         return { error: null };
     };
 
@@ -37,9 +42,8 @@ export function NewOpinion() {
         <div id="new-opinion">
             <h2>Share your opinion!</h2>
             <form action={submit}>
-                <p>{state.error}</p>
                 <div className="control-row">
-                    <p className="control">
+                    <div className="control">
                         <label htmlFor="userName">Your Name</label>
                         <input
                             type="text"
@@ -47,9 +51,10 @@ export function NewOpinion() {
                             name="userName"
                             defaultValue={state.enteredValues?.userName}
                         />
-                    </p>
+                        <p className="errors">{state.error?.nameMsg}</p>
+                    </div>
 
-                    <p className="control">
+                    <div className="control">
                         <label htmlFor="title">Title</label>
                         <input
                             type="text"
@@ -57,9 +62,10 @@ export function NewOpinion() {
                             name="title"
                             defaultValue={state.enteredValues?.title}
                         />
-                    </p>
+                        <p className="errors">{state.error?.titleMsg}</p>
+                    </div>
                 </div>
-                <p className="control">
+                <div className="control">
                     <label htmlFor="body">Your Opinion</label>
                     <textarea
                         id="body"
@@ -67,14 +73,12 @@ export function NewOpinion() {
                         rows={5}
                         defaultValue={state.enteredValues?.body}
                     ></textarea>
-                </p>
+                    <p className="errors">{state.error?.bodyMsg}</p>
+                </div>
 
                 <p className="actions">
                     <button type="submit">Submit</button>
                 </p>
-                <div className="errors">
-                    {state.error?.length > 0 && <p>{state.error}</p>}
-                </div>
             </form>
         </div>
     );
