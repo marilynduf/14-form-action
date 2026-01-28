@@ -9,6 +9,7 @@ export function NewOpinion() {
         const userName = formData.get("userName");
         const title = formData.get("title");
         const body = formData.get("body");
+        const province = formData.get("province");
 
         let errorMsg = {};
 
@@ -18,9 +19,11 @@ export function NewOpinion() {
         if (!isNotEmpty(title)) {
             errorMsg.titleMsg = "Enter a title";
         }
-
         if (!isNotEmpty(body)) {
             errorMsg.bodyMsg = "Enter a message";
+        }
+        if (province === "select") {
+            errorMsg.provinceMsg = "Choose a Province";
         }
 
         if (Object.keys(errorMsg).length > 0) {
@@ -30,6 +33,7 @@ export function NewOpinion() {
                     userName,
                     title,
                     body,
+                    province,
                 },
             };
         }
@@ -79,6 +83,16 @@ export function NewOpinion() {
                 <p className="actions">
                     <button type="submit">Submit</button>
                 </p>
+
+                <div className="control">
+                    <label htmlFor="province">Choose your province</label>
+                    <select id="province" name="province">
+                        <option value="select">Select a province</option>
+                        <option value="Québec">Québec</option>
+                        <option value="Ontario">Ontario</option>
+                    </select>
+                    <p className="errors">{state.error?.provinceMsg}</p>
+                </div>
             </form>
         </div>
     );
