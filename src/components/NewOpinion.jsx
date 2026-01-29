@@ -1,18 +1,19 @@
-import { useActionState } from "react";
+import { useActionState, use } from "react";
+import { OpinionsContext } from "../store/opinions-context";
 
 const isNotEmpty = function (data) {
     return data.length > 0;
 };
 
 export function NewOpinion() {
-    const newOpinionAction = function (prevState, formData) {
+    const { addOpinion } = use(OpinionsContext);
+
+    const newOpinionAction = async function (prevState, formData) {
         const userName = formData.get("userName");
         const title = formData.get("title");
         const body = formData.get("body");
         const province = formData.get("province");
         const colors = formData.getAll("color");
-
-        console.log(colors);
 
         let errorMsg = {};
 
@@ -44,6 +45,8 @@ export function NewOpinion() {
                 },
             };
         }
+
+        await addOpinion({ userName, title, body, province, colors });
         return { error: null };
     };
 
