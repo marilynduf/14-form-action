@@ -1,5 +1,6 @@
 import { useActionState, use } from "react";
 import { OpinionsContext } from "../store/opinions-context";
+import Submit from "./Submit";
 
 const isNotEmpty = function (data) {
     return data.length > 0;
@@ -162,10 +163,7 @@ export function NewOpinion() {
                     </select>
                     <p className="errors">{state.error?.provinceMsg}</p>
                 </div>
-
-                <p className="actions">
-                    <button type="submit">Submit</button>
-                </p>
+                <Submit />
             </form>
         </div>
     );
