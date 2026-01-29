@@ -50,12 +50,14 @@ export function NewOpinion() {
         return { error: null };
     };
 
-    const [state, submit] = useActionState(newOpinionAction, { error: null });
+    const [state, formAction] = useActionState(newOpinionAction, {
+        error: null,
+    });
 
     return (
         <div id="new-opinion">
             <h2>Share your opinion!</h2>
-            <form action={submit}>
+            <form action={formAction}>
                 <div className="control-row">
                     <div className="control">
                         <label htmlFor="userName">Your Name</label>
